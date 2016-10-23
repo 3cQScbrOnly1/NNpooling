@@ -7,7 +7,7 @@
 // Each model consists of two parts, building neural graph and defining output losses.
 struct ComputionGraph : Graph{
 public:
-	const static int max_sentence_length = 256;
+	const static int max_sentence_length = 2048;
 
 public:
 	// node instances
@@ -55,6 +55,8 @@ public:
 		// second step: build graph
 		//forward
 		int words_num = feature.m_tweet_words.size();
+		if(words_num > max_sentence_length) 
+			words_num = max_sentence_length;
 		for (int i = 0; i < words_num; i++)
 		{
 			_word_inputs[i].forward(this, feature.m_tweet_words[i]);
