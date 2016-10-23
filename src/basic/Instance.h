@@ -1,0 +1,76 @@
+#ifndef _INSTANCE_H_
+#define _INSTANCE_H_
+
+#include <iostream>
+using namespace std;
+
+class Instance
+{
+public:
+	void clear()
+	{
+		m_id.clear();
+		m_tweet.clear();
+		m_label.clear();
+	}
+
+	void evaluate(const string& predict_label, Metric& eval) const
+	{
+		if (predict_label == m_label)
+			eval.correct_label_count++;
+		eval.overall_label_count++;
+	}
+
+	void copyValuesFrom(const Instance& anInstance)
+	{
+		allocate(anInstance.size());
+		m_label = anInstance.m_label;
+		m_tweet = anInstance.m_tweet;
+	}
+
+
+	int size() const {
+		return m_tweet.size();
+	}
+
+	void allocate(int length)
+	{
+		clear();
+		m_tweet.resize(length);
+	}
+
+	void evaluate(const string& predict_label, Metric& against, Metric& favor)
+	{
+		if (predict_label == m_label)
+		{
+			if (m_label == "FAVOR")
+			{
+				favor.correct_label_count++;
+				favor.predicated_label_count++;
+			}
+			if (m_label == "AGAINST")
+			{
+				against.correct_label_count++;
+				against.predicated_label_count++;
+			}
+		}
+		else
+		{
+			if (predict_label == "FAVOR")
+				favor.predicated_label_count++;
+			if (predict_label == "AGAINST")
+				against.predicated_label_count++;
+		}
+		if (m_label == "FAVOR")
+			favor.overall_label_count++;
+		if (m_label == "AGAINST")
+			against.overall_label_count++;
+	}
+
+public:
+	string m_id;
+	vector<string> m_tweet;
+	string m_label;
+};
+
+#endif /*_INSTANCE_H_*/
