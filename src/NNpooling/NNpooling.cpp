@@ -2,7 +2,7 @@
 
 #include "Argument_helper.h"
 
-Classifier::Classifier() {
+Classifier::Classifier(int memsize) :m_driver(memsize){
 	// TODO Auto-generated constructor stub
 	srand(0);
 }
@@ -211,7 +211,7 @@ void Classifier::train(const string& trainFile, const string& devFile, const str
 			eval.correct_label_count += m_driver._eval.correct_label_count;
 
 			if ((curUpdateIter + 1) % m_options.verboseIter == 0) {
-				//m_driver.checkgrad(subExamples, curUpdateIter + 1);
+				m_driver.checkgrad(subExamples, curUpdateIter + 1);
 				std::cout << "current: " << updateIter + 1 << ", total block: " << batchBlock << std::endl;
 				std::cout << "Cost = " << cost << ", Tag Correct(%) = " << eval.getAccuracy() << std::endl;
 			}
@@ -231,9 +231,9 @@ void Classifier::train(const string& trainFile, const string& devFile, const str
 				devInsts[idx].evaluate(result_label, metric_dev);
 
 				if (!m_options.outBest.empty()) {
-					//curDecodeInst.copyValuesFrom(devInsts[idx]);
-					//curDecodeInst.assignLabel(result_label);
-					//decodeInstResults.push_back(curDecodeInst);
+					curDecodeInst.copyValuesFrom(devInsts[idx]);
+					curDecodeInst.assignLabel(result_label);
+					decodeInstResults.push_back(curDecodeInst);
 				}
 			}
 
@@ -255,9 +255,9 @@ void Classifier::train(const string& trainFile, const string& devFile, const str
 					testInsts[idx].evaluate(result_label, metric_test);
 
 					if (bCurIterBetter && !m_options.outBest.empty()) {
-						//curDecodeInst.copyValuesFrom(testInsts[idx]);
-						//curDecodeInst.assignLabel(result_label);
-						//decodeInstResults.push_back(curDecodeInst);
+						curDecodeInst.copyValuesFrom(testInsts[idx]);
+						curDecodeInst.assignLabel(result_label);
+						decodeInstResults.push_back(curDecodeInst);
 					}
 				}
 				std::cout << "test:" << std::endl;
@@ -280,9 +280,9 @@ void Classifier::train(const string& trainFile, const string& devFile, const str
 					otherInsts[idx][idy].evaluate(result_label, metric_test);
 
 					if (bCurIterBetter && !m_options.outBest.empty()) {
-						//curDecodeInst.copyValuesFrom(otherInsts[idx][idy]);
-						//curDecodeInst.assignLabel(result_label);
-						//decodeInstResults.push_back(curDecodeInst);
+						curDecodeInst.copyValuesFrom(otherInsts[idx][idy]);
+						curDecodeInst.assignLabel(result_label);
+						decodeInstResults.push_back(curDecodeInst);
 					}
 				}
 				std::cout << "test:" << std::endl;
@@ -332,10 +332,10 @@ void Classifier::test(const string& testFile, const string& outputFile, const st
 		string result_label;
 		predict(testExamples[idx].m_feature, result_label);
 		testInsts[idx].evaluate(result_label, metric_test);
-		//Instance curResultInst;
-		//curResultInst.copyValuesFrom(testInsts[idx]);
-		//curResultInst.assignLabel(result_label);
-		//testInstResults.push_back(curResultInst);
+		Instance curResultInst;
+		curResultInst.copyValuesFrom(testInsts[idx]);
+		curResultInst.assignLabel(result_label);
+		testInstResults.push_back(curResultInst);
 	}
 	std::cout << "test:" << std::endl;
 	metric_test.print();
@@ -358,7 +358,8 @@ int main(int argc, char* argv[]) {
 	std::string trainFile = "", devFile = "", testFile = "", modelFile = "", optionFile = "";
 	std::string outputFile = "";
 	bool bTrain = false;
-	dsr::Argument_helper ah;
+	int memsize = 0;
+ 	dsr::Argument_helper ah;
 
 	ah.new_flag("l", "learn", "train or test", bTrain);
 	ah.new_named_string("train", "trainCorpus", "named_string", "training corpus to train a model, must when training", trainFile);
@@ -368,10 +369,13 @@ int main(int argc, char* argv[]) {
 	ah.new_named_string("model", "modelFile", "named_string", "model file, must when training and testing", modelFile);
 	ah.new_named_string("option", "optionFile", "named_string", "option file to train a model, optional when training", optionFile);
 	ah.new_named_string("output", "outputFile", "named_string", "output file to test, must when testing", outputFile);
+	ah.new_named_int("memsize", "memorySize", "named_int", "This argument decides the size of static memory allocation", memsize);
 
 	ah.process(argc, argv);
 
-	Classifier the_classifier;
+	if (memsize < 0)
+		memsize = 0;
+	Classifier the_classifier(memsize);
 	if (bTrain) {
 		the_classifier.train(trainFile, devFile, testFile, modelFile, optionFile);
 	}

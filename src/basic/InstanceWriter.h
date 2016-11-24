@@ -14,10 +14,15 @@ public:
 	int write(const Instance *pInstance)
 	{
 	  if (!m_outf.is_open()) return -1;
+		
 
 	  const string &label = pInstance->m_label;
 
-	  m_outf << label << endl;
+	  m_outf << label << " ";
+	  vector<string> words = pInstance->m_tweet;
+	  int word_size = words.size();
+	  for (int idx = 0; idx < word_size; idx++)
+		  m_outf << words[idx] << " ";
 	  m_outf << endl;
 	  return 0;
 	}

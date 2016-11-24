@@ -33,16 +33,13 @@ public:
 
 	void exportModelParams(ModelUpdate& ada){
 		words.exportAdaParams(ada);
-
 		olayer_linear.exportAdaParams(ada);
 	}
 
 
 	void exportCheckGradParams(CheckGrad& checkgrad){
-		checkgrad.add(&(words.E), "_words.E");
-
 		checkgrad.add(&(olayer_linear.W), "olayer_linear.W");
-		checkgrad.add(&(olayer_linear.b), "olayer_linear.b");
+		//checkgrad.add(&(olayer_linear.b), "olayer_linear.b");
 	}
 
 	// will add it later

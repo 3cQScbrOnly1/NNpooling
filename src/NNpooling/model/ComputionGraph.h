@@ -12,6 +12,7 @@ public:
 public:
 	// node instances
 	vector<LookupNode> _word_inputs;
+
 	AvgPoolNode _avg_pooling;
 	MaxPoolNode _max_pooling;
 	MinPoolNode _min_pooling;
@@ -31,6 +32,9 @@ public:
 	//allocate enough nodes 
 	inline void createNodes(int sent_length){
 		_word_inputs.resize(sent_length);
+		 _avg_pooling.setParam(sent_length);
+		 _max_pooling.setParam(sent_length);
+		 _min_pooling.setParam(sent_length);
 	}
 
 	inline void clear(){
@@ -38,11 +42,17 @@ public:
 	}
 
 public:
-	inline void initial(ModelParams& model, HyperParams& opts){
+	inline void initial(ModelParams& model, HyperParams& opts, AlignedMemoryPool* mem = NULL){
 		for (int idx = 0; idx < _word_inputs.size(); idx++) {
 			_word_inputs[idx].setParam(&model.words);
+			_word_inputs[idx].init(opts.wordDim, opts.dropProb, mem);
 		}
-		_output.setParam(&model.olayer_linear);
+		 _avg_pooling.init(opts.wordDim, -1, mem);
+		 _max_pooling.init(opts.wordDim, -1, mem);
+		 _min_pooling.init(opts.wordDim, -1, mem);
+		 _concat.init(opts.inputsize, -1, mem);
+		 _output.setParam(&model.olayer_linear);
+		 _output.init(opts.labelSize, -1, mem);
 	}
 	
 
@@ -57,8 +67,7 @@ public:
 		int words_num = feature.m_tweet_words.size();
 		if(words_num > max_sentence_length) 
 			words_num = max_sentence_length;
-		for (int i = 0; i < words_num; i++)
-		{
+		for (int i = 0; i < words_num; i++) {
 			_word_inputs[i].forward(this, feature.m_tweet_words[i]);
 		}
 		_max_pooling.forward(this, getPNodes(_word_inputs, words_num));

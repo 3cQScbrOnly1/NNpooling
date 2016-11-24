@@ -16,7 +16,7 @@
 
 class Driver{
 public:
-	Driver() {
+	Driver(int memsize) :_aligned_mem(memsize){
 		_pcg = NULL;
 	}
 
@@ -34,6 +34,7 @@ public:
 	Metric _eval;
 	CheckGrad _checkgrad;
 	ModelUpdate _ada;  // model update
+	AlignedMemoryPool _aligned_mem;
 
 
 public:
@@ -54,7 +55,7 @@ public:
 
 		_pcg = new ComputionGraph();
 		_pcg->createNodes(ComputionGraph::max_sentence_length);
-		_pcg->initial(_modelparams, _hyperparams);
+		_pcg->initial(_modelparams, _hyperparams, &_aligned_mem);
 
 		setUpdateParameters(_hyperparams.nnRegular, _hyperparams.adaAlpha, _hyperparams.adaEps);
 	}
@@ -65,8 +66,6 @@ public:
 
 		int example_num = examples.size();
 		dtype cost = 0.0;
-
-		static vector<PMat> tpmats;
 
 		for (int count = 0; count < example_num; count++) {
 			const Example& example = examples[count];

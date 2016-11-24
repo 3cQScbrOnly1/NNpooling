@@ -28,6 +28,9 @@ public:
 		m_tweet = anInstance.m_tweet;
 	}
 
+	void assignLabel(const string& resulted_label) {
+		m_label = resulted_label;
+	}
 
 	int size() const {
 		return m_tweet.size();
@@ -43,12 +46,12 @@ public:
 	{
 		if (predict_label == m_label)
 		{
-			if (m_label == "FAVOR")
+			if (m_label == "1")
 			{
 				favor.correct_label_count++;
 				favor.predicated_label_count++;
 			}
-			if (m_label == "AGAINST")
+			if (m_label == "0")
 			{
 				against.correct_label_count++;
 				against.predicated_label_count++;
@@ -56,14 +59,14 @@ public:
 		}
 		else
 		{
-			if (predict_label == "FAVOR")
+			if (predict_label == "1")
 				favor.predicated_label_count++;
-			if (predict_label == "AGAINST")
+			if (predict_label == "0")
 				against.predicated_label_count++;
 		}
-		if (m_label == "FAVOR")
+		if (m_label == "1")
 			favor.overall_label_count++;
-		if (m_label == "AGAINST")
+		if (m_label == "0")
 			against.overall_label_count++;
 	}
 
