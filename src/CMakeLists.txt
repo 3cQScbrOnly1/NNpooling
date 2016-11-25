@@ -5,3 +5,4 @@ include_directories(
 
 
 add_subdirectory(NNpooling)
+add_subdirectory(NNCNN)
