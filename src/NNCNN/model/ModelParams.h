@@ -16,7 +16,7 @@ public:
 
 
 public:
-	bool initial(HyperParams& opts){
+	bool initial(HyperParams& opts, AlignedMemoryPool* mem = NULL){
 
 		// some model parameters should be initialized outside
 		if (words.nVSize <= 0 || labelAlpha.size() <= 0){
@@ -28,7 +28,7 @@ public:
 		opts.labelSize = labelAlpha.size();
 		opts.inputSize = opts.windowOutput * 3;
 
-		olayer_linear.initial(opts.labelSize, opts.inputSize, false);
+		olayer_linear.initial(opts.labelSize, opts.inputSize, false, mem);
 		return true;
 	}
 

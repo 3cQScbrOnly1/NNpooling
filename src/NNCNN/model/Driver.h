@@ -44,7 +44,7 @@ public:
 			std::cout << "hyper parameter initialization Error, Please check!" << std::endl;
 			return;
 		}
-		if (!_modelparams.initial(_hyperparams)){
+		if (!_modelparams.initial(_hyperparams, &_aligned_mem)){
 			std::cout << "model parameter initialization Error, Please check!" << std::endl;
 			return;
 		}
