@@ -1,4 +1,4 @@
-#include "NNCNNLabeler.h"
+#include "NNCNNTriPoolLabeler.h"
 
 #include "Argument_helper.h"
 
@@ -140,8 +140,8 @@ void Classifier::train(const string& trainFile, const string& devFile, const str
 	//std::cout << "Test example number: " << trainInsts.size() << std::endl;
 
 	createAlphabet(trainInsts);
-	addTestAlpha(devInsts);
-	addTestAlpha(testInsts);
+	//addTestAlpha(devInsts);
+	//addTestAlpha(testInsts);
 	for (int idx = 0; idx < otherInsts.size(); idx++) {
 		addTestAlpha(otherInsts[idx]);
 	}

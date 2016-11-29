@@ -20,6 +20,7 @@ public:
 
 	ConcatNode _concat;
 
+	UniNode _hidden;
 	LinearNode _output;
 public:
 	ComputionGraph() : Graph(){
@@ -56,6 +57,8 @@ public:
 		_max_pooling.init(opts.windowOutput, -1, mem);
 		_min_pooling.init(opts.windowOutput, -1, mem);
 		_concat.init(opts.inputSize, -1, mem);
+		_hidden.setParam(&model.hidden_linear);
+		_hidden.init(opts.hiddenSize, opts.dropProb, mem);
 		_output.setParam(&model.olayer_linear);
 		_output.init(opts.labelSize, -1, mem);
 	}
@@ -80,7 +83,8 @@ public:
 		_min_pooling.forward(this, getPNodes(_word_window._outputs, words_num));
 		_avg_pooling.forward(this, getPNodes(_word_window._outputs, words_num));
 		_concat.forward(this, &_max_pooling, &_avg_pooling, &_min_pooling);
-		_output.forward(this, &_concat);
+		_hidden.forward(this, &_concat);
+		_output.forward(this, &_hidden);
 	}
 
 };

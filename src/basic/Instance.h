@@ -41,35 +41,6 @@ public:
 		clear();
 		m_tweet.resize(length);
 	}
-
-	void evaluate(const string& predict_label, Metric& against, Metric& favor)
-	{
-		if (predict_label == m_label)
-		{
-			if (m_label == "1")
-			{
-				favor.correct_label_count++;
-				favor.predicated_label_count++;
-			}
-			if (m_label == "0")
-			{
-				against.correct_label_count++;
-				against.predicated_label_count++;
-			}
-		}
-		else
-		{
-			if (predict_label == "1")
-				favor.predicated_label_count++;
-			if (predict_label == "0")
-				against.predicated_label_count++;
-		}
-		if (m_label == "1")
-			favor.overall_label_count++;
-		if (m_label == "0")
-			against.overall_label_count++;
-	}
-
 public:
 	string m_id;
 	vector<string> m_tweet;
