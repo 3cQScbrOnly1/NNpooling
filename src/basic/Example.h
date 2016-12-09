@@ -10,10 +10,12 @@ class Feature
 {
 public:
 	vector<string> m_tweet_words;
+	vector<string> m_linear_features;
 public:
 	void clear()
 	{
 		m_tweet_words.clear();
+		m_linear_features.clear();
 	}
 };
 
