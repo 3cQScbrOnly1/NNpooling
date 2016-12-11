@@ -18,7 +18,7 @@ public:
 
 	  const string &label = pInstance->m_label;
 
-	  m_outf << label << " ";
+	  m_outf << label << "\t";
 	  vector<string> words = pInstance->m_tweet;
 	  int word_size = words.size();
 	  for (int idx = 0; idx < word_size; idx++)
