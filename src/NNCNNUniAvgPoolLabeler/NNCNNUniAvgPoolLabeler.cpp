@@ -1,4 +1,4 @@
-#include "NNCNNUniPoolLabeler.h"
+#include "NNCNNUniAvgPoolLabeler.h"
 
 #include "Argument_helper.h"
 

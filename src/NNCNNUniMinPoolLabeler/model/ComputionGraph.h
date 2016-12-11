@@ -76,10 +76,10 @@ public:
 			_word_inputs[i].forward(this, feature.m_tweet_words[i]);
 		}
 		_word_window.forward(this, getPNodes(_word_inputs, words_num));
-		_max_pooling.forward(this, getPNodes(_word_window._outputs, words_num));
+		//_max_pooling.forward(this, getPNodes(_word_window._outputs, words_num));
 		_min_pooling.forward(this, getPNodes(_word_window._outputs, words_num));
-		_avg_pooling.forward(this, getPNodes(_word_window._outputs, words_num));
-		_hidden.forward(this, &_avg_pooling);
+		//_avg_pooling.forward(this, getPNodes(_word_window._outputs, words_num));
+		_hidden.forward(this, &_min_pooling);
 		_output.forward(this, &_hidden);
 	}
 
