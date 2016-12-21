@@ -211,7 +211,7 @@ void Classifier::train(const string& trainFile, const string& devFile, const str
 			eval.correct_label_count += m_driver._eval.correct_label_count;
 
 			if ((curUpdateIter + 1) % m_options.verboseIter == 0) {
-				m_driver.checkgrad(subExamples, curUpdateIter + 1);
+				//m_driver.checkgrad(subExamples, curUpdateIter + 1);
 				std::cout << "current: " << updateIter + 1 << ", total block: " << batchBlock << std::endl;
 				std::cout << "Cost = " << cost << ", Tag Correct(%) = " << eval.getAccuracy() << std::endl;
 			}
@@ -220,6 +220,7 @@ void Classifier::train(const string& trainFile, const string& devFile, const str
 		}
 
 		if (devNum > 0) {
+			clock_t time_start = clock();
 			bCurIterBetter = false;
 			if (!m_options.outBest.empty())
 				decodeInstResults.clear();
@@ -236,7 +237,8 @@ void Classifier::train(const string& trainFile, const string& devFile, const str
 					decodeInstResults.push_back(curDecodeInst);
 				}
 			}
-
+			std::cout << "Dev finished. Total time taken is: " << double(clock() - time_start) / CLOCKS_PER_SEC << std::endl;
+			std::cout << "dev:" << std::endl;
 			metric_dev.print();
 
 			if (!m_options.outBest.empty() && metric_dev.getAccuracy() > bestDIS) {
@@ -245,6 +247,7 @@ void Classifier::train(const string& trainFile, const string& devFile, const str
 			}
 
 			if (testNum > 0) {
+				time_start = clock();
 				if (!m_options.outBest.empty())
 					decodeInstResults.clear();
 				metric_test.reset();
@@ -260,6 +263,7 @@ void Classifier::train(const string& trainFile, const string& devFile, const str
 						decodeInstResults.push_back(curDecodeInst);
 					}
 				}
+				std::cout << "Test finished. Total time taken is: " << double(clock() - time_start) / CLOCKS_PER_SEC << std::endl;
 				std::cout << "test:" << std::endl;
 				metric_test.print();
 
