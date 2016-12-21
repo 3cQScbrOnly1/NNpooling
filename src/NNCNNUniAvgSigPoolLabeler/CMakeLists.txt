@@ -4,4 +4,4 @@ include_directories(
 )
 
 add_executable(NNCNNUniAvgSigPoolLabeler NNCNNUniAvgSigPoolLabeler.cpp)
-
+target_link_libraries(NNCNNUniAvgSigPoolLabeler ${LIBS})

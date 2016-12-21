@@ -4,4 +4,4 @@ include_directories(
 )
 
 add_executable(NgramLabeler NgramLabeler.cpp)
-
+target_link_libraries(NgramLabeler ${LIBS})
