@@ -11,7 +11,10 @@ add_subdirectory(NNCNNUniAvgReLuPoolLabeler)
 add_subdirectory(NNCNNUniAvgSigPoolLabeler)
 add_subdirectory(NNCNNUniAvgTanhPoolLabeler)
 
-add_subdirectory(NNCNNUniMaxPoolLabeler)
+add_subdirectory(NNCNNUniMaxTanhPoolLabeler)
+add_subdirectory(NNCNNUniMaxSigPoolLabeler)
+add_subdirectory(NNCNNUniMaxReluPoolLabeler)
+
 add_subdirectory(NNCNNUniMinPoolLabeler)
 add_subdirectory(NNCNNBiPoolLabeler)
 add_subdirectory(NgramLabeler)
