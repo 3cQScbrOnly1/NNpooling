@@ -23,4 +23,7 @@ add_subdirectory(NNCNNUniMinTanhPoolLabeler)
 
 
 add_subdirectory(NNCNNBiPoolLabeler)
-add_subdirectory(NgramLabeler)
+
+add_subdirectory(UniGramLabeler)
+add_subdirectory(UniBiGramLabeler)
+add_subdirectory(UniBiTriGramLabeler)

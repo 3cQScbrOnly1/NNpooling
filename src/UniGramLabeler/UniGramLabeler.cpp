@@ -1,4 +1,4 @@
-#include "NgramLabeler.h"
+#include "UniGramLabeler.h"
 
 #include "Argument_helper.h"
 
@@ -89,11 +89,6 @@ void Classifier::extractFeature(Feature& feat, const Instance* pInstance) {
 	for (int i = 0; i < word_size; i++)
 	{
 		feat.m_linear_features.push_back("uni="+ words[i]);
-	}
-
-	for (int i = 0; i < word_size - 1; i++)
-	{
-		feat.m_linear_features.push_back("bi="+ words[i] + "####" + words[i + 1]);
 	}
 }
 
