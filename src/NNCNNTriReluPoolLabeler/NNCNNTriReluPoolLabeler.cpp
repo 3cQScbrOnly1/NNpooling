@@ -1,4 +1,4 @@
-#include "NNCNNTriPoolLabeler.h"
+#include "NNCNNTriReluPoolLabeler.h"
 
 #include "Argument_helper.h"
 

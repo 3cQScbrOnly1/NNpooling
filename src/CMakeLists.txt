@@ -5,7 +5,9 @@ include_directories(
 
 
 add_subdirectory(NNpooling)
-add_subdirectory(NNCNNTriPoolLabeler)
+add_subdirectory(NNCNNTriReluPoolLabeler)
+add_subdirectory(NNCNNTriSigPoolLabeler)
+add_subdirectory(NNCNNTriTanhPoolLabeler)
 
 add_subdirectory(NNCNNUniAvgReLuPoolLabeler)
 add_subdirectory(NNCNNUniAvgSigPoolLabeler)
