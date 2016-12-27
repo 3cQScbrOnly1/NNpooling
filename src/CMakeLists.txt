@@ -21,6 +21,9 @@ add_subdirectory(NNCNNUniMinReluPoolLabeler)
 add_subdirectory(NNCNNUniMinSigPoolLabeler)
 add_subdirectory(NNCNNUniMinTanhPoolLabeler)
 
+add_subdirectory(NNCNNMaxReluUniGramLabeler)
+add_subdirectory(NNCNNMaxReluUniBiGramLabeler)
+add_subdirectory(NNCNNMaxReluUniBiTriGramLabeler)
 
 add_subdirectory(NNCNNBiPoolLabeler)
 
