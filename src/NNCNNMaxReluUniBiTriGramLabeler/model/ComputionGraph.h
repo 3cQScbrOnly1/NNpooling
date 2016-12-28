@@ -61,8 +61,8 @@ public:
 		_max_pooling.init(opts.hiddenSize, -1, mem);
 		_min_pooling.init(opts.hiddenSize, -1, mem);
 		_sparse.setParam(&model.sparse_layer);
-		_sparse.init(opts.hiddenSize, -1, mem);
-		_concat.init(opts.hiddenSize * 2, -1, mem);
+		_sparse.init(opts.labelSize, -1, mem);
+		_concat.init(opts.hiddenSize + opts.labelSize, -1, mem);
 		_output.setParam(&model.olayer_linear);
 		_output.init(opts.labelSize, -1, mem);
 	}

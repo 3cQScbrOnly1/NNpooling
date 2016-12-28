@@ -31,8 +31,8 @@ public:
 		opts.featSize = featAlpha.size();
 		opts.inputSize = opts.windowOutput;
 		hidden_linear.initial(opts.hiddenSize, opts.inputSize, true, mem);
-		sparse_layer.initial(&featAlpha, opts.hiddenSize);
-		olayer_linear.initial(opts.labelSize, opts.hiddenSize * 2, false, mem);
+		sparse_layer.initial(&featAlpha, opts.labelSize);
+		olayer_linear.initial(opts.labelSize, opts.hiddenSize + opts.labelSize, false, mem);
 		return true;
 	}
 
