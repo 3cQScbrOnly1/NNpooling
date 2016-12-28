@@ -95,7 +95,7 @@ void Classifier::extractFeature(Feature& feat, const Instance* pInstance) {
 
 	for (int i = 0; i < word_size - 2; i++)
 	{
-		feat.m_linear_features.push_back("bi=" + words[i] + "####" + words[i + 1] + "####" + words[i + 2]);
+		feat.m_linear_features.push_back("tri=" + words[i] + "####" + words[i + 1] + "####" + words[i + 2]);
 	}
 }
 
