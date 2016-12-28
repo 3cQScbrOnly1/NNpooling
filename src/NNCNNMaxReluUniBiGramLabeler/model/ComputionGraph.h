@@ -88,6 +88,7 @@ public:
 			_hidden[i].forward(this, &_word_window._outputs[i]);
 		}
 		_max_pooling.forward(this, getPNodes(_hidden, words_num));
+		_sparse.forward(this, feature.m_linear_features);
 		_concat.forward(this, &_max_pooling, &_sparse);
 		_output.forward(this, &_concat);
 	}

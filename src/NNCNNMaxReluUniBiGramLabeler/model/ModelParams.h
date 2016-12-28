@@ -50,6 +50,7 @@ public:
 		checkgrad.add(&hidden_linear.W, "hidden_linear.W");
 		checkgrad.add(&hidden_linear.b, "hidden_linear.b");
 		checkgrad.add(&(olayer_linear.W), "olayer_linear.W");
+		checkgrad.add(&(sparse_layer.W), "sparse_layer.W");
 		//checkgrad.add(&(olayer_linear.b), "olayer_linear.b");
 	}
 
