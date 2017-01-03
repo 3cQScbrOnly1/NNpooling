@@ -9,11 +9,11 @@ public:
 	Alphabet wordAlpha; // should be initialized outside
 	LookupTable words; // should be initialized outside
 	UniParams hidden_linear;
-	UniParams olayer_linear; // output
 public:
 	Alphabet labelAlpha; // should be initialized outside
 	Alphabet featAlpha; // should be initialized outside
 	SparseParams sparse_layer;
+	UniParams neural_layer;
 	SoftMaxLoss loss;
 
 
@@ -32,7 +32,7 @@ public:
 		opts.inputSize = opts.windowOutput;
 		hidden_linear.initial(opts.hiddenSize, opts.inputSize, true, mem);
 		sparse_layer.initial(&featAlpha, opts.labelSize);
-		olayer_linear.initial(opts.labelSize, opts.hiddenSize + opts.labelSize, false, mem);
+		neural_layer.initial(opts.labelSize, opts.hiddenSize, true, mem);
 		return true;
 	}
 
@@ -41,7 +41,7 @@ public:
 		words.exportAdaParams(ada);
 		hidden_linear.exportAdaParams(ada);
 		sparse_layer.exportAdaParams(ada);
-		olayer_linear.exportAdaParams(ada);
+		neural_layer.exportAdaParams(ada);
 	}
 
 
@@ -49,8 +49,10 @@ public:
 		checkgrad.add(&words.E, "words.E");
 		checkgrad.add(&hidden_linear.W, "hidden_linear.W");
 		checkgrad.add(&hidden_linear.b, "hidden_linear.b");
-		checkgrad.add(&(olayer_linear.W), "olayer_linear.W");
 		checkgrad.add(&(sparse_layer.W), "sparse_layer.W");
+		checkgrad.add(&(neural_layer.W), "neural_layer.W");
+		checkgrad.add(&(neural_layer.b), "neural_layer.b");
+
 		//checkgrad.add(&(olayer_linear.b), "olayer_linear.b");
 	}
 

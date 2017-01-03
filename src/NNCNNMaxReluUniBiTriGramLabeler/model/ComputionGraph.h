@@ -19,8 +19,8 @@ public:
 	MaxPoolNode _max_pooling;
 	MinPoolNode _min_pooling;
 	SparseNode _sparse;
-	ConcatNode _concat;
-	LinearNode _output;
+	UniNode _neural;
+	PAddNode _output;
 public:
 	ComputionGraph() : Graph(){
 	}
@@ -62,8 +62,8 @@ public:
 		_min_pooling.init(opts.hiddenSize, -1, mem);
 		_sparse.setParam(&model.sparse_layer);
 		_sparse.init(opts.labelSize, -1, mem);
-		_concat.init(opts.hiddenSize + opts.labelSize, -1, mem);
-		_output.setParam(&model.olayer_linear);
+		_neural.setParam(&model.neural_layer);
+		_neural.init(opts.labelSize, -1, mem);
 		_output.init(opts.labelSize, -1, mem);
 	}
 
@@ -88,9 +88,9 @@ public:
 			_hidden[i].forward(this, &_word_window._outputs[i]);
 		}
 		_max_pooling.forward(this, getPNodes(_hidden, words_num));
+		_neural.forward(this, &_max_pooling);
 		_sparse.forward(this, feature.m_linear_features);
-		_concat.forward(this, &_max_pooling, &_sparse);
-		_output.forward(this, &_concat);
+		_output.forward(this, &_neural, &_sparse);
 	}
 };
 
