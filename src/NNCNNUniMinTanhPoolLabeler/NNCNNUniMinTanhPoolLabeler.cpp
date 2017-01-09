@@ -323,6 +323,7 @@ int Classifier::predict(const Feature& feature, string& output) {
 
 void Classifier::test(const string& testFile, const string& outputFile, const string& modelFile) {
 	loadModelFile(modelFile);
+	m_driver.TestInitial();
 	vector<Instance> testInsts;
 	m_pipe.readInstances(testFile, testInsts);
 
@@ -351,11 +352,24 @@ void Classifier::test(const string& testFile, const string& outputFile, const st
 
 
 void Classifier::loadModelFile(const string& inputModelFile) {
-
+	ifstream is(inputModelFile);
+	if (is.is_open()) {
+		m_driver._hyperparams.loadModel(is);
+		m_driver._modelparams.loadModel(is, &m_driver._aligned_mem);
+		is.close();
+	} else
+		cout << "load model error" << endl;
 }
 
 void Classifier::writeModelFile(const string& outputModelFile) {
-
+	ofstream os(outputModelFile);
+	if (os.is_open()) {
+		m_driver._hyperparams.saveModel(os);
+		m_driver._modelparams.saveModel(os);
+		os.close();
+		cout << "write model ok. " << endl;
+	} else
+		cout << "open output file error" << endl;
 }
 
 int main(int argc, char* argv[]) {

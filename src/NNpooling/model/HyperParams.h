@@ -15,7 +15,6 @@ struct HyperParams{
 	dtype adaEps; // for optimization
 
 	int hiddensize;
-	int rnnhiddensize;
 	dtype dropProb;
 
 
@@ -35,7 +34,6 @@ public:
 		adaAlpha = opt.adaAlpha;
 		adaEps = opt.adaEps;
 		hiddensize = opt.hiddenSize;
-		rnnhiddensize = opt.rnnHiddenSize;
 		dropProb = opt.dropProb;
 
 		bAssigned = true;
