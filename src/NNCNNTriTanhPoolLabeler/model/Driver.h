@@ -60,6 +60,26 @@ public:
 		setUpdateParameters(_hyperparams.nnRegular, _hyperparams.adaAlpha, _hyperparams.adaEps);
 	}
 
+	inline void TestInitial() {
+		if (!_hyperparams.bValid()){
+			std::cout << "hyper parameter initialization Error, Please check!" << std::endl;
+			return;
+		}
+		if (!_modelparams.TestInitial(_hyperparams, &_aligned_mem)){
+			std::cout << "model parameter initialization Error, Please check!" << std::endl;
+			return;
+		}
+		_modelparams.exportModelParams(_ada);
+		_modelparams.exportCheckGradParams(_checkgrad);
+
+		_hyperparams.print();
+
+		_pcg = new ComputionGraph();
+		_pcg->createNodes(ComputionGraph::max_sentence_length);
+		_pcg->initial(_modelparams, _hyperparams, &_aligned_mem);
+
+		setUpdateParameters(_hyperparams.nnRegular, _hyperparams.adaAlpha, _hyperparams.adaEps);
+	}
 
 	inline dtype train(const vector<Example>& examples, int iter) {
 		_eval.reset();

@@ -52,6 +52,41 @@ public:
 	}
 
 
+	void saveModel(std::ofstream &os) const{
+		os << nnRegular << std::endl;
+		os << adaAlpha << std::endl;
+		os << adaEps << std::endl;
+
+		os << hiddenSize << std::endl;
+		os << wordContext << std::endl;
+		os << wordWindow << std::endl;
+		os << windowOutput << std::endl;
+		os << dropProb << std::endl;
+
+
+		os << wordDim << std::endl;
+		os << inputSize << std::endl;
+		os << labelSize << std::endl;
+	}
+
+	void loadModel(std::ifstream &is){
+		is >> nnRegular;
+		is >> adaAlpha;
+		is >> adaEps;
+
+		is >> hiddenSize;
+		is >> wordContext;
+		is >> wordWindow;
+		is >> windowOutput;
+		is >> dropProb;
+
+
+		is >> wordDim;
+		is >> inputSize;
+		is >> labelSize;
+
+		bAssigned = true;
+	}
 public:
 
 	void print(){
