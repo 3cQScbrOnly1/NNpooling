@@ -403,7 +403,7 @@ int main(int argc, char* argv[]) {
 	else {
 		the_classifier.test(testFile, outputFile, modelFile);
 	}
-	getchar();
+	//getchar();
 	//test(argv);
 	//ah.write_values(std::cout);
 }
